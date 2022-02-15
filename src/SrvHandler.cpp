@@ -58,10 +58,11 @@ void SrvHandler::onReadable(ReadableNotification* pNf)
             ERROR("readMessage fail %d", retCode);
             return;
          }
-         ERROR("receive %d buf %s", _packBodySize, _buffer);
+         ERROR("receive %d buf[%x]:%s", _packBodySize, _buffer, _buffer);
 
          // delegate to framework
-         _msgEvent.notify(this, _buffer);
+         MsgEventArgs args = MsgEventArgs(_buffer,_packBodySize);
+         _msgEvent.notify(this, args);
      }
      catch (Exception& exc)
      {

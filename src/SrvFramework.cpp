@@ -4,9 +4,12 @@
 namespace simpleserver
 {
 
-void SrvFramework::onMessage(const void* pSender, char*& msg)
+void SrvFramework::onMessage(const void* pSender, MsgEventArgs& args)
 {
-    TRACE("msg[%x]:%s", msg, msg);
+    char* buf = NULL;
+    Int32 bufSize = 0;
+    args.getBuffer(buf, bufSize);
+    TRACE("msg[%x] size %d :%s", buf, bufSize, buf);
 }
 
 }

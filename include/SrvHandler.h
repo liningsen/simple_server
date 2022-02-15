@@ -1,6 +1,7 @@
 #ifndef __SRV_HANDLER_H__
 #define __SRV_HANDLER_H__
 
+#include "MsgEventArgs.h"
 #include "SrvFramework.h"
 #include "Poco/Observer.h"
 #include "Poco/BasicEvent.h"
@@ -55,7 +56,7 @@ private:
     Observer<SrvHandler, ErrorNotification> _oe;
     char* _buffer;
     Int32 _packBodySize;
-    BasicEvent<char*> _msgEvent;
+    BasicEvent<MsgEventArgs> _msgEvent;
     SrvFramework _framework;
 };
 }
