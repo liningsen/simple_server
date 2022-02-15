@@ -8,7 +8,7 @@ message("LIB_PATH: ${EXT_LIB}")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(CliTest testClient.cpp)
-add_executable(SrvTest SimpleServer.cpp LogWrapper.cpp AsyncChannelEx.cpp SrvHandler.cpp)
+add_executable(SrvTest SimpleServer.cpp LogWrapper.cpp AsyncChannelEx.cpp SrvHandler.cpp SrvFramework.cpp)
 target_link_libraries(CliTest PocoFoundationd PocoNetd)
 target_link_libraries(SrvTest PocoFoundationd PocoUtild PocoXMLd PocoJSONd PocoNetd)
 

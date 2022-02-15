@@ -1,7 +1,9 @@
 #ifndef __SRV_HANDLER_H__
 #define __SRV_HANDLER_H__
 
+#include "SrvFramework.h"
 #include "Poco/Observer.h"
+#include "Poco/BasicEvent.h"
 #include "Poco/Net/SocketNotification.h"
 #include "Poco/Net/StreamSocket.h"
 #include "Poco/Net/SocketReactor.h"
@@ -9,6 +11,7 @@
 
 using Poco::Int32;
 using Poco::Observer;
+using Poco::BasicEvent;
 using Poco::Net::StreamSocket;
 using Poco::Net::SocketReactor;
 using Poco::Net::ReadableNotification;
@@ -52,6 +55,8 @@ private:
     Observer<SrvHandler, ErrorNotification> _oe;
     char* _buffer;
     Int32 _packBodySize;
+    BasicEvent<char*> _msgEvent;
+    SrvFramework _framework;
 };
 }
 

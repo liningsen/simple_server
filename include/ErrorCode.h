@@ -7,6 +7,7 @@
 #define ERR_PARSE_BODY_SIZE          300
 #define ERR_READ_N                   400
 #define ERR_READABLE                 500
+#define ERR_PEER_SHUTDOWN            600 
 
 
 #endif

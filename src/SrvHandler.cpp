@@ -34,6 +34,7 @@ SrvHandler::SrvHandler(StreamSocket& socket, SocketReactor& reactor) :
     _reactor.addEventHandler(_socket, _os);
     _reactor.addEventHandler(_socket, _ot);
     _reactor.addEventHandler(_socket, _oe);
+    _msgEvent += delegate(&_framework, &SrvFramework::onMessage);
 }
 
 SrvHandler::~SrvHandler()
@@ -44,6 +45,7 @@ SrvHandler::~SrvHandler()
     _reactor.removeEventHandler(_socket, _os);
     _reactor.removeEventHandler(_socket, _ot);
     _reactor.removeEventHandler(_socket, _oe);
+    _msgEvent -= delegate(&_framework, &SrvFramework::onMessage);
 }
 
 void SrvHandler::onReadable(ReadableNotification* pNf)
@@ -57,7 +59,9 @@ void SrvHandler::onReadable(ReadableNotification* pNf)
             return;
          }
          ERROR("receive %d buf %s", _packBodySize, _buffer);
+
          // delegate to framework
+         _msgEvent.notify(this, _buffer);
      }
      catch (Exception& exc)
      {
@@ -117,11 +121,14 @@ Int32 SrvHandler::readN(Int32 n)
                 continue;
             }
             ERROR("receiveBytes errno %d", errno);
+            _socket.shutdownSend();
+            delete this;
             return errno;
         } else if (0 == nread) {
             ERROR("peer %s closed", _peerAddr.c_str());
             _socket.shutdownSend();
             delete this;
+            return ERR_PEER_SHUTDOWN;
         } else {
             nleft -= nread;
             TRACE("total %d recv %d left %d buf %s", n, nread, nleft, string(p, nread).c_str());
