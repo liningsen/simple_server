@@ -2,7 +2,16 @@
  Prerequsite
 ********************************************************************************
 Please intall Poco Library first
+download and install part is written in autogen.sh
 ********************************************************************************
  Getting Started
+1 ./autogen.sh
+2 ./bin/SrvTest
+NOTE:
+if run with "error while loading shared libraries"
+please run :
 
+export LD_LIBRARY_PATH=../external/usr/local/lib:$LD_LIBRARY_PATH
+
+in terminal
 ********************************************************************************
