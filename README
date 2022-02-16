@@ -1,8 +1,12 @@
 ********************************************************************************
  Prerequsite
 ********************************************************************************
-Please intall Poco Library, Protobuf Library
-download and install part is written in autogen.sh
+In order to install protobuf, Please install these packages first:
+
+sudo apt-get install autoconf automake libtool curl make g++ unzip
+
+Then intall Poco Library, Protobuf Library
+downloading and installing parts are written in autogen.sh
 ********************************************************************************
  Getting Started
 1 ./autogen.sh
@@ -12,4 +16,9 @@ NOTE:
 if run with "error while loading shared libraries" please run :
 
 export LD_LIBRARY_PATH=./external/usr/local/lib:$LD_LIBRARY_PATH
+********************************************************************************
+ Tested Environment
+Ubuntu 20.04.3 LTS
+cmake 3.16.3
+g++ 9.3.0
 ********************************************************************************
