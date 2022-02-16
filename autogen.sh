@@ -40,15 +40,20 @@ fi
 DIR="./downloads"
 if [ -d "${DIR}" ]; then
     echo "${DIR} already exists"
-    cd ${DIR}
-    cd poco
-    git pull
 else
     mkdir ${DIR}
+fi
+cd ${DIR}
+
+DIR="./poco"
+if [ -d "${DIR}" ]; then
+    echo "${DIR} already exists"
     cd ${DIR}
+    git pull
+else
     echo "###### Downloading Poco Library ..."
     git clone -b master https://github.com/pocoproject/poco.git
-    cd poco
+    cd ${DIR}
 fi
 
 DIR="./cmake-build"
@@ -62,7 +67,45 @@ cmake -DCMAKE_BUILD_TYPE=Debug .. && cmake --build .
 #echo "###### Please grant admistrator privilege to install library to /usr/local"
 make DESTDIR=../../../external install
 cd ../../../
+echo "${PWD}"
 
+cd ./downloads
+DIR="./protobuf"
+if [ -d "${DIR}" ]; then
+    echo "${DIR} already exists"
+    cd ${DIR}
+    git pull
+else
+    mkdir ${DIR}
+    echo "###### Downloading Protobuf Library ..."
+    git clone https://github.com/google/protobuf.git
+    cd ${DIR}
+fi
+git submodule update --init --recursive
+./autogen.sh
+
+DIR="${PWD}/../../external/usr/local"
+./configure --prefix=${DIR}
+echo "${DIR}"
+make
+make install
+cd ../../
+echo "${PWD}"
+
+DIR="../external/usr/local"
+cd ./proto
+${DIR}/bin/protoc --cpp_out=. ReqRsp.proto
+g++ -std=c++0x -c -fPIC -I${DIR}/include ReqRsp.pb.cc
+g++ ReqRsp.pb.o -shared -o libpbReqRsp.so -L${DIR}/lib/ -lprotobuf
+cp ./ReqRsp.pb.h ../include
+DIR="../lib"
+if [ ! -d "${DIR}" ]; then
+    mkdir ${DIR}
+fi
+cp ./libpbReqRsp.so ${DIR}
+cd ../
+
+DIR="./cmake-build"
 if [ -d "${DIR}" ]; then
     rm -rf ${DIR}/*
 else
