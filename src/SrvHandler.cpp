@@ -14,7 +14,7 @@ namespace simpleserver
 {
 
 SrvHandler::SrvHandler(StreamSocket& socket, SocketReactor& reactor) :
-    BUF_SIZE(6),
+    BUF_SIZE(4096),
     PACK_HEADER_SIZE(4),
     _socket(socket),
     _reactor(reactor),

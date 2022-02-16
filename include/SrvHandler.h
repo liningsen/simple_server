@@ -59,6 +59,7 @@ private:
     BasicEvent<MsgEventArgs> _msgEvent;
     SrvFramework _framework;
 };
+
 }
 
 #endif
