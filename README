@@ -11,6 +11,7 @@ downloading and installing parts are written in autogen.sh
  Getting Started
 1 ./autogen.sh
 2 ./bin/SrvTest
+3 ./bin/CliTest
 
 NOTE:
 if run with "error while loading shared libraries" please run :
